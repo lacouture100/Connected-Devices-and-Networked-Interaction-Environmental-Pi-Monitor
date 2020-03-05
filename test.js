@@ -143,4 +143,4 @@ function logSensorData(data) {
    fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
 
 }
-readingInterval = setInterval(getReadings, 1000);
+readingInterval = setInterval(readSensorDataDHT11, 1000);

@@ -140,7 +140,8 @@ function logSensorData(data) {
    //data = data.replace('}', '-');
 
    let datalog = logTime + data;
-   fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
+   //fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
+   fs.appendFile(path.join(__dirname, '/datalog/data.txt'), datalog);
    console.log(path.join(__dirname, '/datalog/data.txt'));
 
 }

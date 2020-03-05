@@ -12,6 +12,7 @@ console.log(logTime);
 logTime = logTime.toString().slice(0,-6);
 logTime = logTime.replace("T", "_");
 console.log(logTime);
+//
 /* function displaySensorData() {
     // generate new datetime object:
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00

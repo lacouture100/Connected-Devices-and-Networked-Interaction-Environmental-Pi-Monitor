@@ -56,34 +56,35 @@ let sensorReadings = {}; // object for device characteristics]
       console.error("Failed to read sensor data:", err);
    }
 
-}  */ 
+}  */
 
 
 function readSensorDataDHT11() {
    {
 
       //grab the humidity reading and limit decimals to 1
-     try{
-      //Send message tot server if temperature and humidity are available
-      if (!isNaN(tempReading) && !isNaN(humidReading)) {
+      try {
+         //Send message tot server if temperature and humidity are available
+         if (!isNaN(tempReading) && !isNaN(humidReading)) {
 
-         sensorReadings.temperature = tempReading;
-         sensorReadings.humidity = humidReading;
-         console.log(
-            `temperature: ${tempReading}°C, `,
-            `humidity: ${humidReading}%`
-         );
-         return sensorReadings;
-         //send message to server
-         sendToServer(JSON.stringify(sensorReadings));
-         clearInterval(readingInterval);
-         
-      };
-   } catch (err) {
-      console.error("Failed to read sensor data:", err);
+            sensorReadings.temperature = tempReading;
+            sensorReadings.humidity = humidReading;
+            console.log(
+               `temperature: ${tempReading}°C, `,
+               `humidity: ${humidReading}%`
+            );
+            return sensorReadings;
+            //send message to server
+            sendToServer(JSON.stringify(sensorReadings));
+            clearInterval(readingInterval);
+
+         };
+      } catch (err) {
+         console.error("Failed to read sensor data:", err);
+      }
+
    }
-
-} 
+}
 
 
 function getServerResponse(response) {
@@ -94,8 +95,6 @@ function getServerResponse(response) {
    });
 }
 
-// open two ADC channels:
-let tempSensor = mcpadc.open(0, sampleRate, addNewChannel);
 
 
 // assemble the HTTPS request and send it:
@@ -113,7 +112,7 @@ function sendToServer(dataToSend) {
     http://example.com:443/data
    */
    var options = {
-      host: hostName,  
+      host: hostName,
       port: 443,
       path: '/data',
       method: 'POST',
@@ -124,16 +123,16 @@ function sendToServer(dataToSend) {
       }
    };
 
-   var request = https.request(options, getServerResponse);	// start it
-   request.write(postData);			// send the data
-   console.log (postData);
-   request.end();			            // end it
+   var request = https.request(options, getServerResponse); // start it
+   request.write(postData); // send the data
+   console.log(postData);
+   request.end(); // end it
 
 }
 
-function logSensorData(data){
+function logSensorData(data) {
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
-   logTime = logTime.toString().slice(0,-6);
+   logTime = logTime.toString().slice(0, -6);
    logTime = logTime.replace("T", "_");
 
    data = JSON.stringify(data);

@@ -1,21 +1,29 @@
 const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
+const Tail = require('tail').Tail;
+
+const i2c = require('i2c-bus');
+const i2cBus = i2c.openSync(1);
+const screen = require('oled-i2c-bus');
+const font = require('oled-font-5x7');
 
 
-try{
-    
+
+try {
+
+    displayTimeSinceSent()
     let datalog = path.join(__dirname, '/datalog/data.txt');
-    let file = fs.readdirSync(datalog);
-    fs.watch(filePath,'utf8', function(event,trigger){
-        console.log("The file changed")
-        file = fs.readdirSync(filePath);
-        console.log(`New info:${file}`);
-    })
+    tail = new Tail(datalog);
+    tail.on("line", function (data) {
+        console.log(data);
+        displaySensorData(data);
+    });;
 
-}catch(error){
+
+} catch (error) {
     console.log(error);
-    }
+}
 
 
 
@@ -25,7 +33,7 @@ logTime = logTime.toString().slice(0,-6);
 logTime = logTime.replace("T", "_");
 console.log(logTime); */
 //
-/* function displaySensorData() {
+function displaySensorData(data) {
     // generate new datetime object:
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
@@ -36,10 +44,7 @@ console.log(logTime); */
     data = data.replace(',','\n');
     data = data.replace('}',''); 
     //datalog = logTime + data;
- 
- 
-    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
- 
+  
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);
     oled.writeString(font, 1, data, 1, true);
@@ -54,4 +59,4 @@ console.log(logTime); */
     oled.setCursor(0, 0);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
  
- } */
+ } 

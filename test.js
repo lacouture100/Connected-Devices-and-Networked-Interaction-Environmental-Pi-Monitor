@@ -162,7 +162,7 @@ function logSensorData(data) {
    });
 }
 
-function displaySensorData(data) {
+/* function displaySensorData(data) {
 
    // generate new datetime object:
    //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
@@ -192,7 +192,7 @@ function displayTimeSinceSent() {
    oled.setCursor(0, 0);
    oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
 
-}
+} */
 
 // update once per second:
 readingInterval = setInterval(readSensorDataDHT11, 1000);

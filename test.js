@@ -167,13 +167,13 @@ function displaySensorData(data) {
    //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
    //logTime = logTime.toString().slice(0, -6);
    //logTime = logTime.replace("T", "_");
-
+   oled.clearDisplay();
    data = JSON.stringify(data);
    data = data.replace('{"','');
    data = data.replace('"',''); 
    data = data.replace(',','\n');
    data = data.replace('}','');
-   //datalog = logTime + data;
+   datalog = logTime + data;
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
@@ -184,7 +184,7 @@ function displaySensorData(data) {
 }
 
 function displayTimeSinceSent() {
-   
+   oled.clearDisplay();
    //let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
    let now = new Date();
    let lastSent= (now.getMinutes()).toString()

@@ -161,8 +161,8 @@ function logSensorData(data){
    data = data.replace('{"temperature":', 'T');
    data = data.replace('}', '-');
 
-   let data = logTime + data;
-   fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), data);
+   let datalog = logTime + data;
+   fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
 
 }
 readingInterval = setInterval(getReadings, 1000);

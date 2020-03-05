@@ -141,9 +141,9 @@ function logSensorData(data) {
 
    let datalog = logTime + data;
    //fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
-   fs.appendFile(path.join(__dirname, '/datalog/data.txt'), `/n${datalog}`, (err) => {
+   fs.appendFile(path.join(__dirname, '/datalog/data.txt'), `\n${datalog}`, (err) => {
       if (err) throw err;
-      console.log('The lyrics were updated!');
+      console.log(`The datalog was updated at ${logTime}`);
   });
 
 }

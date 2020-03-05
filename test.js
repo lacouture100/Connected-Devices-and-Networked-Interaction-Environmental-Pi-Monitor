@@ -70,8 +70,8 @@ function readSensorDataDHT11() {
             sensorReadings.temperature = tempReading;
             sensorReadings.humidity = humidReading;
             console.log(
-               `temperature: ${tempReading}°C, `,
-               `humidity: ${humidReading}%`
+               `temperature: ${sensorReadings.temperature.toFixed(1)}°C, `,
+               `humidity: ${sensorReadings.humidity.toFixed(1)}%`
             );
             return sensorReadings;
             //send message to server

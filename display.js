@@ -3,7 +3,7 @@ const Tail = require('tail').Tail;
 const path = require("path");
 
 try{
-    tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
+    let tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
     tail.on("line", function(data) {
         console.log(data);
       });

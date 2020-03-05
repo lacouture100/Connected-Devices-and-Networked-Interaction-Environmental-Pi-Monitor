@@ -180,7 +180,5 @@ function displaySensorData(data) {
 }
 
 // update once per second:
-
-displaySensorData(datalog);
 readingInterval = setInterval(readSensorDataDHT11, 1000);
-let displayDataInterval = setInterval(displaySensorData(data) , 10);
+let displayDataInterval = setInterval(displaySensorData(datalog) , 10);

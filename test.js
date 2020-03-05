@@ -169,10 +169,10 @@ function displaySensorData(data) {
    //logTime = logTime.toString().slice(0, -6);
    //logTime = logTime.replace("T", "_");
    data = JSON.stringify(data);
-/*    data = data.replace('{"','');
+   data = data.replace('{"','');
    data = data.replace('"',''); 
    data = data.replace(',','\n');
-   data = data.replace('}',''); */
+   data = data.replace('}',''); 
    //datalog = logTime + data;
 
 

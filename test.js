@@ -74,11 +74,12 @@ function readSensorDataDHT11() {
       //grab the humidity reading and limit decimals to 1
       try {
          //Send message tot server if temperature and humidity are available
-         let tempReading = 2.0;
-         let humidReading = 2.0;
+         let tempReading = 0.0;
+         let humidReading = 0.0;
          if (!isNaN(tempReading) && !isNaN(humidReading)) {
-            sensorReadings.temperature = tempReading;
-            sensorReadings.humidity = humidReading;
+
+            sensorReadings.temperature = tempReading.toFixed(1);
+            sensorReadings.humidity = humidReading.toFixed(1);
             console.log(
                `temperature: ${sensorReadings.temperature}°C, `,
                `humidity: ${sensorReadings.humidity}%`
@@ -170,6 +171,10 @@ function displaySensorData(data) {
    data = data.replace(',','\n');
    data = data.replace('}',''); */
    //datalog = logTime + data;
+
+
+   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
+
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 30);
    oled.writeString(font, 1, data, 1, true);

@@ -30,7 +30,7 @@ let humidReading = 0.0;
 
 let sensorReadings = {}; // object for device characteristics]
 
-let date_log = new Date();
+
 
 
 // get sensor readings into the object called sensorReadings:
@@ -161,7 +161,7 @@ function logSensorData(data){
    data = data.replace('{"temperature":', 'T');
    data = data.replace('}', '-');
 
-   data = data.join(logTime,data);
+   let data = logTime + data;
    fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), data);
 
 }

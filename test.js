@@ -81,8 +81,6 @@ function getServerResponse(response) {
    response.on('end', function (data) {
       console.log(data);
       console.log("Success! Message sent.")
-
-
    });
 }
 
@@ -100,7 +98,6 @@ function getTemperature(error, reading) {
    // convert to a floating point number of 2 decimal point precision:
    device.temperature = Number(temperature.toFixed(2));
 }
-
 
 
 // get sensor readings into the object called device:
@@ -157,8 +154,8 @@ function logSensorData(data){
    logTime = logTime.replace("T", "_");
 
    data = JSON.stringify(data);
-   data = data.replace('{"temperature":', 'T');
-   data = data.replace('}', '-');
+   //data = data.replace('{"temperature":', 'T');
+   //data = data.replace('}', '-');
 
    let datalog = logTime + data;
    fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);

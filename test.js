@@ -76,6 +76,7 @@ function readSensorDataDHT11() {
             return sensorReadings;
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
+            logSensorData(sensorReadings);
             clearInterval(readingInterval);
 
          };
@@ -125,7 +126,6 @@ function sendToServer(dataToSend) {
 
    var request = https.request(options, getServerResponse); // start it
    request.write(postData); // send the data
-   logSensorData(postData);
    console.log(postData);
    request.end(); // end it
 

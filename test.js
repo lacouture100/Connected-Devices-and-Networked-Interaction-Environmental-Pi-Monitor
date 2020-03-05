@@ -113,8 +113,7 @@ function sendToServer(dataToSend) {
     http://example.com:443/data
    */
    var options = {
-      host: hostName,
-      port: 443,
+      host: 'tigoe.io',
       path: '/data',
       method: 'POST',
       headers: {

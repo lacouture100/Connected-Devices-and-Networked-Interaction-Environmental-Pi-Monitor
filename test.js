@@ -12,8 +12,6 @@ const i2cBus = i2c.openSync(1);
 const screen = require('oled-i2c-bus');
 const font = require('oled-font-5x7');
 
-
-
 const sampleRate = {
    speedHz: 20000
 }; // ADC sample rate
@@ -42,8 +40,6 @@ var opts = {
    address: 0x3C // I2C address:check your particular model
 };
 var oled = new screen(i2cBus, opts);
-
-
 
 // get sensor readings into the object called sensorReadings:
 /* async function readSensorDataDHT11() {
@@ -75,14 +71,14 @@ var oled = new screen(i2cBus, opts);
 //Read the temperature and humidity from the DHT11 sensor
 function readSensorDataDHT11() {
    {
-
       //grab the humidity reading and limit decimals to 1
       try {
          //Send message tot server if temperature and humidity are available
+         let tempReading = 2.0;
+         let humidReading = 2.0;
          if (!isNaN(tempReading) && !isNaN(humidReading)) {
-
-            sensorReadings.temperature = tempReading.toFixed(1);
-            sensorReadings.humidity = humidReading.toFixed(1);
+            sensorReadings.temperature = tempReading;
+            sensorReadings.humidity = humidReading;
             console.log(
                `temperature: ${sensorReadings.temperature}°C, `,
                `humidity: ${sensorReadings.humidity}%`
@@ -174,10 +170,6 @@ function displaySensorData(data) {
    data = data.replace(',','\n');
    data = data.replace('}',''); */
    //datalog = logTime + data;
-
-
-   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
-
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 30);
    oled.writeString(font, 1, data, 1, true);

@@ -173,7 +173,8 @@ function displaySensorData(data) {
    data = data.replace('"',''); 
    data = data.replace(',','\n');
    data = data.replace('}','');
-   datalog = logTime + data;
+   //datalog = logTime + data;
+   datalog = data;
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 

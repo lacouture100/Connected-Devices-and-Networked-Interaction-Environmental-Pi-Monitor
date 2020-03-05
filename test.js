@@ -63,7 +63,7 @@ function readSensorDataDHT11() {
    {
 
       //grab the humidity reading and limit decimals to 1
-     
+     try{
       //Send message tot server if temperature and humidity are available
       if (!isNaN(tempReading) && !isNaN(humidReading)) {
 

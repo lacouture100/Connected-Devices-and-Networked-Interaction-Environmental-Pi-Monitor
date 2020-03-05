@@ -104,8 +104,8 @@ function getServerResponse(response) {
 function sendToServer(data) {
    // make the POST data a JSON object and stringify it:
    var postData = JSON.stringify({
-      'macAddress': /*'dc:a6:32:1f:5b:5f',*/ 'AA:BB:CC:DD:EE:FF',
-      'sessionKey': '12345678',
+      'macAddress': 'dc:a6:32:1f:5b:5f',
+      'sessionKey': 'F309E9DF-035E-49A8-BBB1-12794432421C',
       'data': data
    });
 
@@ -148,11 +148,11 @@ function logSensorData(data) {
    });
 }
 
-function displaySensorData(data){
+function displaySensorData(data) {
    var opts = {
-      width: 128,     // screen width and height
+      width: 128, // screen width and height
       height: 64,
-      address: 0x3C  // I2C address:check your particular model
+      address: 0x3C // I2C address:check your particular model
    };
    var oled = new screen(i2cBus, opts);
    // clear the screen:
@@ -166,15 +166,15 @@ function displaySensorData(data){
    data = JSON.stringify(data);
    let datalog = logTime + data;
 
-   let lastSent = moment().startOf('hour').fromNow();  // 24 minutes ago
+   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 0);
    oled.writeString(font, 1, datalog, 1, true);
 
-      // set cursor to x = 0 y = 0:
-      oled.setCursor(0, 10);
-      oled.writeString(font, 1, lastSent, 1, true);
+   // set cursor to x = 0 y = 0:
+   oled.setCursor(0, 10);
+   oled.writeString(font, 1, lastSent, 1, true);
 }
 
 // update once per second:

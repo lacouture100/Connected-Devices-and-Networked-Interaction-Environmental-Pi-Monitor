@@ -81,11 +81,11 @@ function readSensorDataDHT11() {
          //Send message tot server if temperature and humidity are available
          if (!isNaN(tempReading) && !isNaN(humidReading)) {
 
-            sensorReadings.temperature = tempReading;
-            sensorReadings.humidity = humidReading;
+            sensorReadings.temperature = tempReading.toFixed(1);
+            sensorReadings.humidity = humidReading.toFixed(1);
             console.log(
-               `temperature: ${sensorReadings.temperature.toFixed(1)}°C, `,
-               `humidity: ${sensorReadings.humidity.toFixed(1)}%`
+               `temperature: ${sensorReadings.temperature}°C, `,
+               `humidity: ${sensorReadings.humidity}%`
             );
             //log Sensor data
             logSensorData(sensorReadings);
@@ -164,12 +164,16 @@ function logSensorData(data) {
 function displaySensorData(data) {
 
    // generate new datetime object:
-   let logTime = moment().format() // 2020-03-05T09:23:03-05:00
-   logTime = logTime.toString().slice(0, -6);
-   logTime = logTime.replace("T", "_");
+   //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
+   //logTime = logTime.toString().slice(0, -6);
+   //logTime = logTime.replace("T", "_");
 
    data = JSON.stringify(data);
-   datalog = logTime + data;
+   data = data.replace('{"','');
+   data = data.replace('"',''); 
+   data = data.replace(',','\n');
+   data = data.replace('}','');
+   //datalog = logTime + data;
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
@@ -185,7 +189,7 @@ function displayTimeSinceSent() {
 
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 0);
-   oled.writeString(font, 1, lastSent, 1, true);
+   oled.writeString(font, 1, `Last message sent: \n${lastSent}`, 1, true);
 
 }
 

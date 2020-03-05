@@ -91,8 +91,7 @@ function readSensorDataDHT11() {
 function getServerResponse(response) {
    // when the final chunk comes in, print it out:
    response.on('end', function (data) {
-      //console.log(data);
-      console.log("Success! Message sent.")
+      return data;
    });
 }
 
@@ -127,6 +126,7 @@ function sendToServer(dataToSend) {
    request.write(postData); // send the data
    //console.log(postData);
    request.end(); // end it
+   console.log("Success! Message sent.")
 
 }
 

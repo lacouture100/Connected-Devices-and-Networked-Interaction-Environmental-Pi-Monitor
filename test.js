@@ -186,8 +186,7 @@ function displayTimeSinceSent() {
       address: 0x3C // I2C address:check your particular model
    };
    var oled = new screen(i2cBus, opts);
-   // clear the screen:
-   oled.clearDisplay();
+
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 

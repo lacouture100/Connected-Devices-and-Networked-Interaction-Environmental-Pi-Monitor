@@ -77,8 +77,8 @@ function readSensorDataDHT11() {
       //grab the humidity reading and limit decimals to 1
       try {
          //Send message tot server if temperature and humidity are available
-         let tempReading = 0.0;
-         let humidReading = 0.0;
+         let tempReading = 1.0;
+         let humidReading = 1.0;
          if (!isNaN(tempReading) && !isNaN(humidReading)) {
 
             sensorReadings.temperature = tempReading.toFixed(1);

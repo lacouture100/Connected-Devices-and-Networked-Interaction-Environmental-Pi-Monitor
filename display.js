@@ -1,15 +1,21 @@
-const moment = require("moment")
-const Tail = require('tail').Tail;
+const moment = require("moment");
 const path = require("path");
+const fs = require("fs");
+
 
 try{
-    let tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
-    tail.on("line", function(data) {
-        console.log(data);
-      });
+    
+    let datalog = path.join(__dirname, '/datalog/data.txt');
+    let file = fs.readdirSync(datalog);
+    fs.watch(filePath,'utf8', function(event,trigger){
+        console.log("The file changed")
+        file = fs.readdirSync(filePath);
+        console.log(`New info:${file}`);
+    })
+
 }catch(error){
     console.log(error);
-}
+    }
 
 
 

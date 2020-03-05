@@ -73,12 +73,12 @@ function readSensorDataDHT11() {
                `temperature: ${sensorReadings.temperature.toFixed(1)}°C, `,
                `humidity: ${sensorReadings.humidity.toFixed(1)}%`
             );
-            return sensorReadings;
+            
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
             logSensorData(sensorReadings);
             clearInterval(readingInterval);
-
+            return sensorReadings;
          };
       } catch (err) {
          console.error("Failed to read sensor data:", err);
@@ -91,7 +91,7 @@ function readSensorDataDHT11() {
 function getServerResponse(response) {
    // when the final chunk comes in, print it out:
    response.on('end', function (data) {
-      console.log(data);
+      //console.log(data);
       console.log("Success! Message sent.")
    });
 }

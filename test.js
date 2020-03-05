@@ -179,6 +179,24 @@ function displaySensorData(data) {
    oled.writeString(font, 1, lastSent, 1, true);
 }
 
+function displayTimeSinceSent() {
+   var opts = {
+      width: 128, // screen width and height
+      height: 64,
+      address: 0x3C // I2C address:check your particular model
+   };
+   var oled = new screen(i2cBus, opts);
+   // clear the screen:
+   oled.clearDisplay();
+
+   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
+
+   // set cursor to x = 0 y = 0:
+   oled.setCursor(0, 0);
+   oled.writeString(font, 1, lastSent, 1, true);
+
+}
+
 // update once per second:
 readingInterval = setInterval(readSensorDataDHT11, 1000);
-let displayDataInterval = setInterval(displaySensorData(sensorReadings) , 10);
+let displayDataInterval = setInterval(displayTimeSinceSent , 100);

@@ -142,6 +142,7 @@ function logSensorData(data) {
 
    let datalog = logTime + data;
    fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
+   console.log(path.join(__dirname, '/datalog/data.txt'));
 
 }
 readingInterval = setInterval(readSensorDataDHT11, 1000);

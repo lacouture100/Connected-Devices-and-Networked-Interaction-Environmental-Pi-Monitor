@@ -178,6 +178,6 @@ function displaySensorData(data){
 }
 
 // update once per second:
-setInterval(showTime, 1000);
-}
+
+
 readingInterval = setInterval(readSensorDataDHT11, 1000);

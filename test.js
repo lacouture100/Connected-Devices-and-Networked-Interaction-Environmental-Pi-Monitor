@@ -184,9 +184,10 @@ function displaySensorData(data) {
 }
 
 function displayTimeSinceSent() {
-
-   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
-
+   
+   //let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
+   let now = new Date();
+   let lastSent= (now.getMinutes()).toString()
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 0);
    oled.writeString(font, 1, `Last message sent: \n${lastSent}`, 1, true);

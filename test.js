@@ -91,7 +91,7 @@ function readSensorDataDHT11() {
             logSensorData(sensorReadings);
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
-            displaySensorData(sensorReadings)
+            displaySensorData(sensorReadings);
 
             clearInterval(readingInterval);
             return sensorReadings;
@@ -169,19 +169,18 @@ function displaySensorData(data) {
    //logTime = logTime.replace("T", "_");
    oled.clearDisplay();
    data = JSON.stringify(data);
-   data = data.replace('{"','');
+/*    data = data.replace('{"','');
    data = data.replace('"',''); 
    data = data.replace(',','\n');
-   data = data.replace('}','');
+   data = data.replace('}',''); */
    //datalog = logTime + data;
-   datalog = data;
+
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
    // set cursor to x = 0 y = 0:
    oled.setCursor(0, 30);
-   oled.writeString(font, 1, datalog, 1, true);
-
+   oled.writeString(font, 1, data, 1, true);
 }
 
 function displayTimeSinceSent() {
@@ -197,4 +196,4 @@ function displayTimeSinceSent() {
 
 // update once per second:
 readingInterval = setInterval(readSensorDataDHT11, 1000);
-let displayDataInterval = setInterval(displayTimeSinceSent , 100);
+let displayDataInterval = setInterval(displayTimeSinceSent, 100);

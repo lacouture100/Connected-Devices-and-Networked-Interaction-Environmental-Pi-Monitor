@@ -2,18 +2,22 @@ const moment = require("moment")
 const Tail = require('tail').Tail;
 const path = require("path");
 
+try{
+    tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
+    tail.on("line", function(data) {
+        console.log(data);
+      });
+}catch(error){
+    console.log(error);
+}
 
-tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
 
-tail.on("line", function(data) {
-  console.log(data);
-});
 
-let logTime = moment().format();
+/* let logTime = moment().format();
 console.log(logTime);
 logTime = logTime.toString().slice(0,-6);
 logTime = logTime.replace("T", "_");
-console.log(logTime);
+console.log(logTime); */
 //
 /* function displaySensorData() {
     // generate new datetime object:

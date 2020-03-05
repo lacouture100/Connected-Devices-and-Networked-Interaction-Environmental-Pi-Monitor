@@ -170,7 +170,7 @@ function displaySensorData(data) {
    //logTime = logTime.replace("T", "_");
    data = JSON.stringify(data);
    data = data.replace('{"','');
-   data = data.replace('"',''); 
+   data = data.replace(/"/g,''); 
    data = data.replace(',','\n');
    data = data.replace('}',''); 
    //datalog = logTime + data;

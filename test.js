@@ -126,7 +126,7 @@ function sendToServer(dataToSend) {
 
    var request = https.request(options, getServerResponse); // start it
    request.write(postData); // send the data
-   console.log(postData);
+   //console.log(postData);
    request.end(); // end it
 
 }

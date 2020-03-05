@@ -155,7 +155,6 @@ function logSensorData(data){
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
    logTime = logTime.toString().slice(0,-6);
    logTime = logTime.replace("T", "_");
-   console.log(logTime)
 
    data = JSON.stringify(data);
    data = data.replace('{"temperature":', 'T');
@@ -163,6 +162,8 @@ function logSensorData(data){
 
    let datalog = logTime + data;
    fs.writeFileSync(path.join(__dirname, '/datalog/data.txt'), datalog);
+   console.log(datalog)
+
 
 }
 readingInterval = setInterval(getReadings, 1000);

@@ -5,7 +5,7 @@ const sensor = require("node-dht-sensor").promises; // include the node-dht-sens
 */
 const fs = require("fs");
 const path = require("path");
-const moment = require("moment.js");
+const moment = require("moment");
 
 
 

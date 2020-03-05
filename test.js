@@ -35,6 +35,15 @@ let sensorReadings = {}; // object for device characteristics]
 
 let datalog;
 
+var oled = new screen(i2cBus, opts);
+
+var opts = {
+   width: 128, // screen width and height
+   height: 64,
+   address: 0x3C // I2C address:check your particular model
+};
+
+
 // get sensor readings into the object called sensorReadings:
 /* async function readSensorDataDHT11() {
    try {
@@ -81,7 +90,7 @@ function readSensorDataDHT11() {
             logSensorData(sensorReadings);
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
-            //displaySensorData(sensorReadings)
+            displaySensorData(sensorReadings)
 
             clearInterval(readingInterval);
             return sensorReadings;
@@ -152,14 +161,7 @@ function logSensorData(data) {
 }
 
 function displaySensorData(data) {
-   var opts = {
-      width: 128, // screen width and height
-      height: 64,
-      address: 0x3C // I2C address:check your particular model
-   };
-   var oled = new screen(i2cBus, opts);
-   // clear the screen:
-   oled.clearDisplay();
+
    // generate new datetime object:
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
    logTime = logTime.toString().slice(0, -6);
@@ -171,22 +173,12 @@ function displaySensorData(data) {
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
    // set cursor to x = 0 y = 0:
-   oled.setCursor(0, 0);
+   oled.setCursor(0, 20);
    oled.writeString(font, 1, datalog, 1, true);
 
-   // set cursor to x = 0 y = 0:
-   oled.setCursor(0, 10);
-   oled.writeString(font, 1, lastSent, 1, true);
 }
 
 function displayTimeSinceSent() {
-   var opts = {
-      width: 128, // screen width and height
-      height: 64,
-      address: 0x3C // I2C address:check your particular model
-   };
-   var oled = new screen(i2cBus, opts);
-
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 

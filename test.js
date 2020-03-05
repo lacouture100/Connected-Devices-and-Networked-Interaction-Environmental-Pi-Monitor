@@ -35,13 +35,14 @@ let sensorReadings = {}; // object for device characteristics]
 
 let datalog;
 
-var oled = new screen(i2cBus, opts);
 
 var opts = {
    width: 128, // screen width and height
    height: 64,
    address: 0x3C // I2C address:check your particular model
 };
+var oled = new screen(i2cBus, opts);
+
 
 
 // get sensor readings into the object called sensorReadings:

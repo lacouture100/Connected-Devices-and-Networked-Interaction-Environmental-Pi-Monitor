@@ -86,9 +86,10 @@ function readSensorDataDHT11() {
             );
             //log Sensor data
             logSensorData(sensorReadings);
+            displaySensorData(sensorReadings);
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
-            displaySensorData(sensorReadings);
+            
 
             clearInterval(readingInterval);
             return sensorReadings;

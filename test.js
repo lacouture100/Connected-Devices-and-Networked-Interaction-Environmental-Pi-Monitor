@@ -33,6 +33,7 @@ let humidReading = 0.0;
 
 let sensorReadings = {}; // object for device characteristics]
 
+let datalog;
 
 // get sensor readings into the object called sensorReadings:
 /* async function readSensorDataDHT11() {
@@ -80,7 +81,7 @@ function readSensorDataDHT11() {
             logSensorData(sensorReadings);
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
-            displaySensorData(sensorReadings)
+            //displaySensorData(sensorReadings)
 
             clearInterval(readingInterval);
             return sensorReadings;
@@ -132,6 +133,8 @@ function sendToServer(data) {
 
 }
 
+
+
 //Log sensor data into the datalog/data.txt file
 function logSensorData(data) {
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
@@ -140,7 +143,7 @@ function logSensorData(data) {
 
    data = JSON.stringify(data);
 
-   let datalog = logTime + data;
+   datalog = logTime + data;
    //Write every new log into the data.txt file with timestamp
    fs.appendFile(path.join(__dirname, '/datalog/data.txt'), `\n${datalog}`, (err) => {
       if (err) throw err;
@@ -157,14 +160,13 @@ function displaySensorData(data) {
    var oled = new screen(i2cBus, opts);
    // clear the screen:
    oled.clearDisplay();
-
    // generate new datetime object:
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
    logTime = logTime.toString().slice(0, -6);
    logTime = logTime.replace("T", "_");
 
    data = JSON.stringify(data);
-   let datalog = logTime + data;
+   datalog = logTime + data;
 
    let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
 
@@ -179,5 +181,6 @@ function displaySensorData(data) {
 
 // update once per second:
 
-
+displaySensorData(datalog);
 readingInterval = setInterval(readSensorDataDHT11, 1000);
+let displayDataInterval = setInterval(displaySensorData(data) , 10);

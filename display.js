@@ -3,27 +3,30 @@ const path = require("path");
 const fs = require("fs");
 const Tail = require('tail').Tail;
 
-const i2c = require('i2c-bus');
+/* const i2c = require('i2c-bus');
 const i2cBus = i2c.openSync(1);
 const screen = require('oled-i2c-bus');
 const font = require('oled-font-5x7');
-
-
-
+ */
 try {
 
-    displayTimeSinceSent()
-    let datalog = path.join(__dirname, '/datalog/data.txt');
-    tail = new Tail(datalog);
-    tail.on("line", function (data) {
-        console.log(data);
-        displaySensorData(data);
-    });;
+fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  //console.log(data)
 
+/*   let tempData = data.substring(data.indexOf('t'), data.indexOf('\n'));
+  let humidData = data.substring(data.indexOf('\n'), -1); */
 
-} catch (error) {
-    console.log(error);
-}
+console.log(data)
+  //console.log(`${tempData}C\n${humidData}%`)
+displayTimeSinceSent();
+  displaySensorData(data);
+
+})
+
 
 
 
@@ -38,13 +41,15 @@ function displaySensorData(data) {
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
-    data = JSON.stringify(data);
-    data = data.replace('{"','');
-    data = data.replace(/"/g,''); 
-    data = data.replace(',','\n');
-    data = data.replace('}',''); 
-    //datalog = logTime + data;
-  
+    data=data.toString().substr(-60,60);
+    /*   data = data.replace('{"','');
+      data = data.replace(/"/g,''); 
+      data = data.replace(',','\n');
+      data = data.replace('}',''); */
+      data = data.replace(/"/g,''); 
+    
+      data = data.substring(data.indexOf('t'), data.indexOf('}'));
+      data = data.replace(',','\n');
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);
     oled.writeString(font, 1, data, 1, true);
@@ -59,4 +64,4 @@ function displaySensorData(data) {
     oled.setCursor(0, 0);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
  
- } 
+ }  

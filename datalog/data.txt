@@ -1,2 +1,1 @@
-lklll
-kkk
+2020-03-05_12:46:29{"temperature":"0.0","humidity":"0.0"}

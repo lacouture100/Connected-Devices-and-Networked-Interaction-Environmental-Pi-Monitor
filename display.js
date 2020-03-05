@@ -1,5 +1,7 @@
 const moment = require("moment")
-Tail = require('tail').Tail;
+const Tail = require('tail').Tail;
+const path = require("path");
+
 
 tail = new Tail(path.join(__dirname, '/datalog/data.txt'));
 

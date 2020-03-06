@@ -23,8 +23,8 @@ fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     }
     //console.log(data)
 
-    /*   let tempData = data.substring(data.indexOf('t'), data.indexOf('\n'));
-      let humidData = data.substring(data.indexOf('\n'), -1); */
+      let tempData = data.substring(data.indexOf('t'), data.indexOf('\n'));
+      let humidData = data.substring(data.indexOf('\n'), -1); 
 
     //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
@@ -37,7 +37,7 @@ function displaySensorData(data) {
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
-    data = data.toString().substr(-60, 60);
+    data = data.toString().slice(0, -60);
     /*   data = data.replace('{"','');
       data = data.replace(/"/g,''); 
       data = data.replace(',','\n');

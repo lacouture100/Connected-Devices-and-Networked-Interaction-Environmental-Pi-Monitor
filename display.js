@@ -3,12 +3,18 @@ const path = require("path");
 const fs = require("fs");
 const Tail = require('tail').Tail;
 
-/* const i2c = require('i2c-bus');
+const i2c = require('i2c-bus');
 const i2cBus = i2c.openSync(1);
 const screen = require('oled-i2c-bus');
 const font = require('oled-font-5x7');
- */
 
+
+var opts = {
+    width: 128, // screen width and height
+    height: 64,
+    address: 0x3C // I2C address:check your particular model
+ };
+ var oled = new screen(i2cBus, opts);
 
 fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     if (err) {
@@ -26,16 +32,6 @@ fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     displaySensorData(data);
 
 })
-
-
-
-
-/* let logTime = moment().format();
-console.log(logTime);
-logTime = logTime.toString().slice(0,-6);
-logTime = logTime.replace("T", "_");
-console.log(logTime); */
-//
 function displaySensorData(data) {
     // generate new datetime object:
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00

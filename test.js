@@ -196,4 +196,4 @@ function displayTimeSinceSent() {
 
 // update once per second:
 readingInterval = setInterval(readSensorDataDHT11, 1000);
-let displayDataInterval = setInterval(displayTimeSinceSent, 100);
+//let displayDataInterval = setInterval(displayTimeSinceSent, 100);

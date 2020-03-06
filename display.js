@@ -35,15 +35,11 @@ function displaySensorData(data) {
     //logTime = logTime.replace("T", "_");
     data = data.toString().slice(-60);
     console.log(data)
-    /*   data = data.replace('{"','');
-      data = data.replace(/"/g,''); 
-      data = data.replace(',','\n');
-      data = data.replace('}',''); 
-     data = data.replace(/"/g, '');*/
 
     data = data.substr(data.indexOf('t'), 60);
     console.log(data);
     data = data.replace(',', '\n'); 
+    data = data.replace(/"/g,'');
     console.log(data);
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);

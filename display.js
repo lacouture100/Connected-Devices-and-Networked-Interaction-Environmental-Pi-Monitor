@@ -22,10 +22,6 @@ fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
         return
     }
     //console.log(data)
-
-      let tempData = data.substring(data.indexOf('t'), data.indexOf('\n'));
-      let humidData = data.substring(data.indexOf('\n'), -1); 
-
     //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
     displayTimeSinceSent();

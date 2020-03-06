@@ -33,16 +33,8 @@ let sensorReadings = {}; // object for device characteristics]
 
 let datalog;
 
-
-var opts = {
-   width: 128, // screen width and height
-   height: 64,
-   address: 0x3C // I2C address:check your particular model
-};
-var oled = new screen(i2cBus, opts);
-
 // get sensor readings into the object called sensorReadings:
-/* async function readSensorDataDHT11() {
+async function readSensorDataDHT11() {
    try {
       //Specify DHT sensor model '11', GPIO port '4'
       sensorReadings = await sensor.read(11, 4);
@@ -54,25 +46,28 @@ var oled = new screen(i2cBus, opts);
       //Send message tot server if temperature and humidity are available
       if (!isNaN(tempReading) && !isNaN(humidReading)) {
          console.log(
-            `temp:     ${tempReading}°C, `,
-            `humidity: ${humidReading}%`
+            `temperature:${tempReading}°C, `,
+            `humidity:   ${humidReading}%`
          );
          return sensorReadings;
          //send message to server
+         //log Sensor data
+         logSensorData(sensorReadings);
          sendToServer(JSON.stringify(sensorReadings));
          clearInterval(readingInterval);
+         return sensorReadings;
+
       };
    } catch (err) {
       console.error("Failed to read sensor data:", err);
    }
 
-}  */
+}
 
-oled.clearDisplay();
 
 
 //Read the temperature and humidity from the DHT11 sensor
-function readSensorDataDHT11() {
+/* function readSensorDataDHT11() {
    {
       //grab the humidity reading and limit decimals to 1
       try {
@@ -92,7 +87,7 @@ function readSensorDataDHT11() {
             //displaySensorData(sensorReadings);
             //send message to server
             sendToServer(JSON.stringify(sensorReadings));
-            
+
 
             clearInterval(readingInterval);
             return sensorReadings;
@@ -102,7 +97,7 @@ function readSensorDataDHT11() {
       }
 
    }
-}
+} */
 
 //Server response callback
 function getServerResponse(response) {

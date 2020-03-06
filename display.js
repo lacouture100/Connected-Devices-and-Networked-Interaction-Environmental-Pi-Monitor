@@ -15,6 +15,8 @@ var opts = {
     address: 0x3C // I2C address:check your particular model
  };
  var oled = new screen(i2cBus, opts);
+ 
+ oled.clearDisplay();
 
 fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     if (err) {

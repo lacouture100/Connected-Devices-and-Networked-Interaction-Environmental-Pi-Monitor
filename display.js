@@ -38,10 +38,10 @@ function displaySensorData(data) {
       data = data.replace(/"/g,''); 
       data = data.replace(',','\n');
       data = data.replace('}',''); */
-    data = data.replace(/"/g, '');
+   /*  data = data.replace(/"/g, '');
 
     data = data.substring(data.indexOf('t'), data.indexOf('}'));
-    data = data.replace(',', '\n');
+    data = data.replace(',', '\n'); */
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);
     oled.writeString(font, 1, data, 1, true);

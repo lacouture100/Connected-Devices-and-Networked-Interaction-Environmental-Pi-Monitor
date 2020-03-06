@@ -153,6 +153,6 @@ function logSensorData(data) {
    });
 }
 
-
+readSensorDataDHT11();
 // update once per second:
 //readingInterval = setInterval(readSensorDataDHT11, 1000);

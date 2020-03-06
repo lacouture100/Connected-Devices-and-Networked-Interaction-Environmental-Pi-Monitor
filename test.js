@@ -49,11 +49,10 @@ async function readSensorDataDHT11() {
             `temperature:${tempReading}°C, `,
             `humidity:   ${humidReading}%`
          );
-         return sensorReadings;
          //send message to server
          //log Sensor data
          logSensorData(sensorReadings);
-         sendToServer(JSON.stringify(sensorReadings));
+         //sendToServer(JSON.stringify(sensorReadings));
          clearInterval(readingInterval);
          return sensorReadings;
 
@@ -136,10 +135,7 @@ function sendToServer(data) {
    request.write(postData); // send the data
    request.end(); // end it
    console.log("Success! Message sent.")
-
 }
-
-
 
 //Log sensor data into the datalog/data.txt file
 function logSensorData(data) {
@@ -157,38 +153,6 @@ function logSensorData(data) {
    });
 }
 
-/* function displaySensorData(data) {
-
-   // generate new datetime object:
-   //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
-   //logTime = logTime.toString().slice(0, -6);
-   //logTime = logTime.replace("T", "_");
-   data = JSON.stringify(data);
-   data = data.replace('{"','');
-   data = data.replace(/"/g,''); 
-   data = data.replace(',','\n');
-   data = data.replace('}',''); 
-   //datalog = logTime + data;
-
-
-   let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
-
-   // set cursor to x = 0 y = 0:
-   oled.setCursor(0, 30);
-   oled.writeString(font, 1, data, 1, true);
-}
-
-function displayTimeSinceSent() {
-
-   //let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
-   let now = new Date();
-   let lastSent= (now.getMinutes()).toString()
-   // set cursor to x = 0 y = 0:
-   oled.setCursor(0, 0);
-   oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
-
-} */
 
 // update once per second:
-readingInterval = setInterval(readSensorDataDHT11, 1000);
-//let displayDataInterval = setInterval(displayTimeSinceSent, 100);
+//readingInterval = setInterval(readSensorDataDHT11, 1000);

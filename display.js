@@ -41,14 +41,14 @@ function displaySensorData(data) {
       data = data.replace('}',''); 
      data = data.replace(/"/g, '');*/
 
-    data = data.substr(data.indexOf('t'), data.indexOf('}'));
+    data = data.substr(data.indexOf('t'), 60);
     console.log(data);
     data = data.replace(',', '\n'); 
     console.log(data);
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);
     oled.writeString(font, 1, data, 1, true);
-    console.log(data);
+    
 }
 
 function displayTimeSinceSent() {

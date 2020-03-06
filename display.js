@@ -26,7 +26,7 @@ fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     /*   let tempData = data.substring(data.indexOf('t'), data.indexOf('\n'));
       let humidData = data.substring(data.indexOf('\n'), -1); */
 
-    console.log(data)
+    //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
     displayTimeSinceSent();
     displaySensorData(data);
@@ -49,6 +49,7 @@ function displaySensorData(data) {
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 30);
     oled.writeString(font, 1, data, 1, true);
+    console.log(data);
 }
 
 function displayTimeSinceSent() {
@@ -59,5 +60,5 @@ function displayTimeSinceSent() {
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 0);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
-
+    
 }

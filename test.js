@@ -105,3 +105,5 @@ function logSensorData(data) {
       console.log(`The datalog was updated at ${logTime}`);
    });
 }
+
+cronTask.start();

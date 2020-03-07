@@ -17,7 +17,6 @@ let opts = {
 let oled = new screen(i2cBus, opts);
 
 
-oled.turnOnDisplay();
 
 let cronTask = cron.schedule('* * * * *', () =>  {
   console.log('Refreshed Screen');
@@ -29,8 +28,7 @@ let cronTask = cron.schedule('* * * * *', () =>  {
     //console.log(data)
     //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
-    
-    displayTimeSinceSent();
+
     displaySensorData(data);
 
 })
@@ -38,13 +36,15 @@ let cronTask = cron.schedule('* * * * *', () =>  {
   scheduled: false
 });
 
-cronTask.start();
+
 
 function displaySensorData(data) {
     // generate new datetime object:
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
+    oled.clearDisplay();
+
     data = data.toString().slice(-30);
     console.log(data)
 
@@ -55,6 +55,7 @@ function displaySensorData(data) {
     // set cursor to x = 0 y = 0:
     oled.setCursor(0, 0);
     oled.writeString(font, 1, data, 1, true);
+    displayTimeSinceSent()
 }
 
 function displayTimeSinceSent() {
@@ -66,3 +67,4 @@ function displayTimeSinceSent() {
     oled.setCursor(0, 30);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
 }
+cronTask.start();

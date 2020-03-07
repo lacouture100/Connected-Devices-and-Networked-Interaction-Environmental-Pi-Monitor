@@ -40,12 +40,13 @@ let cronTask = cron.schedule('* * * * *', () =>  {
 
 
 
-function displaySensorData(data) {
+async function displaySensorData(data) {
     // generate new datetime object:
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
-    oled.clearDisplay();
+    await oled.clearDisplay();
+    
 
     data = data.toString().slice(-30);
     console.log(data)

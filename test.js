@@ -1,37 +1,32 @@
-const mcpadc = require('mcp-spi-adc'); // include the MCP SPI library
 const sensor = require("node-dht-sensor").promises; // include the node-dht-sensor library
-/* const oled = require('rpi-oled'); // include the SSD1306 OLED screen library
- var font = require('oled-font-5x7');
-*/
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
+const cron = require('node-cron');
 
 const i2c = require('i2c-bus');
 const i2cBus = i2c.openSync(1);
 const screen = require('oled-i2c-bus');
 const font = require('oled-font-5x7');
 
-const sampleRate = {
-   speedHz: 20000
-}; // ADC sample rate
-let device = {}; // object for device characteristics
-let supplyVoltage = 3.3; // analog reference voltage
-let resolution = 1.0; // A-to-D resolution
-let readingInterval; // interval to do readings (initialized at bottom)
-
 const https = require('https');
 // change the hostname, macAddress, and sessionKey to your own:
-let hostName = '';
-let macAddress = '';
-let sessionKey = '';
+let hostName = 'tigoe.io';
+let macAddress = 'dc:a6:32:1f:5b:5f';
+let sessionKey = 'F309E9DF-035E-49A8-BBB1-12794432421C';
 
-let tempReading = 0.0;
-let humidReading = 0.0;
+let readingInterval; // interval to do readings (initialized at bottom)
 
 let sensorReadings = {}; // object for device characteristics]
 
 let datalog;
+
+let cronTask = cron.schedule('* 1 * * *', () => {
+   console.log('Ran client task');
+   readSensorDataDHT11();
+}, {
+   scheduled: false
+});
 
 // get sensor readings into the object called sensorReadings:
 async function readSensorDataDHT11() {
@@ -39,13 +34,7 @@ async function readSensorDataDHT11() {
       //Read the temperature and humidity from the DHT11 sensor
       sensorReadings = await sensor.read(11, 4); //Specify DHT sensor model '11', GPIO port '4'
 
-      //grab the temperature reading and limit decimals to 1
-      //tempReading = sensorReadings.temperature.toFixed(1);
-      //sensorReadings.temperature = tempReading;
-      //grab the humidity reading and limit decimals to 1
-      //humidReading = sensorReadings.humidity.toFixed(1);
-      //sensorReadings.humidity = humidReading;
-      //Send message tot server if temperature and humidity are available
+      //Send message to server if temperature and humidity are available
       if (!isNaN(sensorReadings.temperature) && !isNaN(sensorReadings.humidity)) {
          //send message to server
          //log Sensor data
@@ -58,12 +47,7 @@ async function readSensorDataDHT11() {
    } catch (err) {
       console.error("Failed to read sensor data:", err);
    }
-
 }
-
-
-
-
 
 //Server response callback
 function getServerResponse(response) {
@@ -77,8 +61,8 @@ function getServerResponse(response) {
 function sendToServer(data) {
    // make the POST data a JSON object and stringify it:
    var postData = JSON.stringify({
-      'macAddress': 'dc:a6:32:1f:5b:5f',
-      'sessionKey': 'F309E9DF-035E-49A8-BBB1-12794432421C',
+      'macAddress': macAddress,
+      'sessionKey': sessionKey,
       'data': data
    });
 
@@ -88,7 +72,7 @@ function sendToServer(data) {
     http://example.com:443/data
    */
    var options = {
-      host: 'tigoe.io',
+      host: hostName,
       path: '/data',
       method: 'POST',
       headers: {
@@ -123,5 +107,3 @@ function logSensorData(data) {
 }
 
 readSensorDataDHT11();
-// update once per second:
-//readingInterval = setInterval(readSensorDataDHT11, 1000);

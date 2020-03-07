@@ -1,14 +1,13 @@
 const moment = require("moment");
 const path = require("path");
 const fs = require("fs");
-const Tail = require('tail').Tail;
 
 const i2c = require('i2c-bus');
 const i2cBus = i2c.openSync(1);
 const screen = require('oled-i2c-bus');
 const font = require('oled-font-5x7');
 
-let cron = require('node-cron');
+const cron = require('node-cron');
 
 let opts = {
     width: 128, // screen width and height
@@ -17,8 +16,8 @@ let opts = {
  };
 let oled = new screen(i2cBus, opts);
 
-let cronTask = cron.schedule('5 * * * * *', () =>  {
-  console.log('stopped task');
+let cronTask = cron.schedule('* * * * *', () =>  {
+  console.log('Refreshed Screen');
   oled.clearDisplay();
   fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     if (err) {

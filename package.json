@@ -19,6 +19,7 @@
     "i2c-bus": "^5.1.0",
     "mcp-spi-adc": "^2.0.4",
     "moment": "^2.24.0",
+    "node-cron": "^2.0.3",
     "node-dht-sensor": "^0.4.1",
     "oled-font-5x7": "^1.0.3",
     "oled-i2c-bus": "^1.0.11",

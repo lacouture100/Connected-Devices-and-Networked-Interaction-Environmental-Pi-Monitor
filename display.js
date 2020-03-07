@@ -18,7 +18,7 @@ let oled = new screen(i2cBus, opts);
 
 
 
-let cronTask = cron.schedule('* * * * *', () =>  {
+
   console.log('Refreshed Screen');
   let logTime = moment().format() // 2020-03-05T09:23:03-05:00
   console.log(logTime);
@@ -33,10 +33,8 @@ let cronTask = cron.schedule('* * * * *', () =>  {
 
     displaySensorData(data);
 
-})
-}, {
-  scheduled: false
 });
+
 
 
 
@@ -45,6 +43,8 @@ async function displaySensorData(data) {
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
+
+    //if you don't wait for the screen to clean the message will get garbled
     await oled.clearDisplay();
     
 
@@ -70,4 +70,3 @@ function displayTimeSinceSent() {
     oled.setCursor(0, 30);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
 }
-cronTask.start();

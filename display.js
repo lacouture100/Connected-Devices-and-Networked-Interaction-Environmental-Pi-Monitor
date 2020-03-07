@@ -15,7 +15,7 @@ let opts = {
     address: 0x3C // I2C address:check your particular model
  };
 let oled = new screen(i2cBus, opts);
-oled.clearDisplay();
+
 
 
 let cronTask = cron.schedule('* * * * *', () =>  {
@@ -28,6 +28,7 @@ let cronTask = cron.schedule('* * * * *', () =>  {
     //console.log(data)
     //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
+    oled.clearDisplay();
     displayTimeSinceSent();
     displaySensorData(data);
 

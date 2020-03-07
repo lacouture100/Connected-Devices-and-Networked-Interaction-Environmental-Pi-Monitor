@@ -39,15 +39,16 @@ async function readSensorDataDHT11() {
       //Specify DHT sensor model '11', GPIO port '4'
       sensorReadings = await sensor.read(11, 4);
       //grab the temperature reading and limit decimals to 1
-      tempReading = sensorReadings.temperature.toFixed(1);
-
+      //tempReading = sensorReadings.temperature.toFixed(1);
+      //sensorReadings.temperature = tempReading;
       //grab the humidity reading and limit decimals to 1
-      humidReading = sensorReadings.humidity.toFixed(1);
+      //humidReading = sensorReadings.humidity.toFixed(1);
+      //sensorReadings.humidity = humidReading;
       //Send message tot server if temperature and humidity are available
-      if (!isNaN(tempReading) && !isNaN(humidReading)) {
+      if (!isNaN(sensorReadings.temperature) && !isNaN(sensorReadings.humidity)) {
          console.log(
-            `temperature:${tempReading}°C, `,
-            `humidity:   ${humidReading}%`
+            `temperature:${sensorReadings.temperature}°C, `,
+            `humidity:   ${sensorReadings.humidity}%`
          );
          //send message to server
          //log Sensor data

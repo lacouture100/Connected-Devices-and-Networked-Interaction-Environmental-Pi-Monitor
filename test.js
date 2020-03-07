@@ -21,14 +21,9 @@ let sensorReadings = {}; // object for device characteristics]
 
 let datalog;
 
-let cronTask = cron.schedule('* 1 * * *', () => {
-   console.log('Ran client task');
-   let logTime = moment().format() // 2020-03-05T09:23:03-05:00
-  console.log(logTime);
-   readSensorDataDHT11();
-}, {
-   scheduled: false
-});
+console.log('Ran client task');
+readSensorDataDHT11();
+
 
 // get sensor readings into the object called sensorReadings:
 async function readSensorDataDHT11() {
@@ -107,5 +102,3 @@ function logSensorData(data) {
       console.log(`The datalog was updated at ${logTime}`);
    });
 }
-
-cronTask.start();

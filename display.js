@@ -35,11 +35,9 @@ function displaySensorData(data) {
     //let logTime = moment().format() // 2020-03-05T09:23:03-05:00
     //logTime = logTime.toString().slice(0, -6);
     //logTime = logTime.replace("T", "_");
-    data = data.toString().slice(-60);
+    data = data.toString().slice(-31);
     console.log(data)
 
-    data = data.substr(data.indexOf('t'), 60);
-    console.log(data);
     data = data.replace(',', '\n'); 
     data = data.replace(/"/g,'');
     //data = data.replace('}','%');

@@ -110,7 +110,7 @@ function logSensorData(data) {
    logTime = logTime.toString().slice(0, -6);
    logTime = logTime.replace("T", "_");
 
-   let temperature = `temperature:${data.temperature}°C, `;
+   let temperature = ` temperature:${data.temperature}°C,`;
    let humidity = `humidity:${data.humidity}%`
 
    datalog = logTime + temperature + humidity;

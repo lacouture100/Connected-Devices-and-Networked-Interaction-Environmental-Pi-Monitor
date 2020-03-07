@@ -15,10 +15,11 @@ let opts = {
     address: 0x3C // I2C address:check your particular model
  };
 let oled = new screen(i2cBus, opts);
+oled.clearDisplay();
+
 
 let cronTask = cron.schedule('* * * * *', () =>  {
   console.log('Refreshed Screen');
-  oled.clearDisplay();
   fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     if (err) {
         console.error(err)

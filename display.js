@@ -17,6 +17,7 @@ let opts = {
 let oled = new screen(i2cBus, opts);
 
 
+oled.turnOnDisplay();
 
 let cronTask = cron.schedule('* * * * *', () =>  {
   console.log('Refreshed Screen');
@@ -28,7 +29,7 @@ let cronTask = cron.schedule('* * * * *', () =>  {
     //console.log(data)
     //console.log(data)
     //console.log(`${tempData}C\n${humidData}%`)
-    oled.clearDisplay();
+    
     displayTimeSinceSent();
     displaySensorData(data);
 

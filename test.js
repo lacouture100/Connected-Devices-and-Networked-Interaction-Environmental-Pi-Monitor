@@ -36,8 +36,9 @@ let datalog;
 // get sensor readings into the object called sensorReadings:
 async function readSensorDataDHT11() {
    try {
-      //Specify DHT sensor model '11', GPIO port '4'
-      sensorReadings = await sensor.read(11, 4);
+      //Read the temperature and humidity from the DHT11 sensor
+      sensorReadings = await sensor.read(11, 4); //Specify DHT sensor model '11', GPIO port '4'
+
       //grab the temperature reading and limit decimals to 1
       //tempReading = sensorReadings.temperature.toFixed(1);
       //sensorReadings.temperature = tempReading;
@@ -46,14 +47,10 @@ async function readSensorDataDHT11() {
       //sensorReadings.humidity = humidReading;
       //Send message tot server if temperature and humidity are available
       if (!isNaN(sensorReadings.temperature) && !isNaN(sensorReadings.humidity)) {
-         console.log(
-            `temperature:${sensorReadings.temperature}°C, `,
-            `humidity:   ${sensorReadings.humidity}%`
-         );
          //send message to server
          //log Sensor data
          logSensorData(sensorReadings);
-         //sendToServer(JSON.stringify(sensorReadings));
+         sendToServer(JSON.stringify(sensorReadings));
          clearInterval(readingInterval);
          return sensorReadings;
 
@@ -66,38 +63,7 @@ async function readSensorDataDHT11() {
 
 
 
-//Read the temperature and humidity from the DHT11 sensor
-/* function readSensorDataDHT11() {
-   {
-      //grab the humidity reading and limit decimals to 1
-      try {
-         //Send message tot server if temperature and humidity are available
-         let tempReading = 2.0;
-         let humidReading = 2.0;
-         if (!isNaN(tempReading) && !isNaN(humidReading)) {
 
-            sensorReadings.temperature = tempReading.toFixed(1);
-            sensorReadings.humidity = humidReading.toFixed(1);
-            console.log(
-               `temperature: ${sensorReadings.temperature}°C, `,
-               `humidity: ${sensorReadings.humidity}%`
-            );
-            //log Sensor data
-            logSensorData(sensorReadings);
-            //displaySensorData(sensorReadings);
-            //send message to server
-            sendToServer(JSON.stringify(sensorReadings));
-
-
-            clearInterval(readingInterval);
-            return sensorReadings;
-         };
-      } catch (err) {
-         console.error("Failed to read sensor data:", err);
-      }
-
-   }
-} */
 
 //Server response callback
 function getServerResponse(response) {
@@ -143,12 +109,12 @@ function logSensorData(data) {
    let logTime = moment().format() // 2020-03-05T09:23:03-05:00
    logTime = logTime.toString().slice(0, -6);
    logTime = logTime.replace("T", "_");
-   console.log(data.temperature);
-   console.log(data.humidity)
 
-   data = JSON.stringify(data);
+   let temperature = `temperature:${data.temperature}°C, `;
+   let humidity = `humidity:${data.humidity}%`
 
-   datalog = logTime + data;
+   datalog = logTime + temperature + humidity;
+   console.log(datalog);
    //Write every new log into the data.txt file with timestamp
    fs.appendFile(path.join(__dirname, '/datalog/data.txt'), `\n${datalog}`, (err) => {
       if (err) throw err;

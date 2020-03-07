@@ -15,7 +15,7 @@ var opts = {
     address: 0x3C // I2C address:check your particular model
  };
  var oled = new screen(i2cBus, opts);
- 
+
  oled.clearDisplay();
 
 fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
@@ -42,10 +42,10 @@ function displaySensorData(data) {
     console.log(data);
     data = data.replace(',', '\n'); 
     data = data.replace(/"/g,'');
-    data = data.replace('}','%');
+    //data = data.replace('}','%');
     console.log(data);
     // set cursor to x = 0 y = 0:
-    oled.setCursor(0, 30);
+    oled.setCursor(0, 0);
     oled.writeString(font, 1, data, 1, true);
     
 }
@@ -54,9 +54,9 @@ function displayTimeSinceSent() {
 
     //let lastSent = moment().startOf('hour').fromNow(); // 24 minutes ago
     let now = new Date();
-    let lastSent = (now.getMinutes()).toString()
+    let lastSent = (now.getMinutes()).toString();
     // set cursor to x = 0 y = 0:
-    oled.setCursor(0, 0);
+    oled.setCursor(0, 30);
     oled.writeString(font, 1, `Last message sent: \n${lastSent} minutes ago`, 1, true);
     
 }

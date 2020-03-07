@@ -20,6 +20,8 @@ let oled = new screen(i2cBus, opts);
 
 let cronTask = cron.schedule('* * * * *', () =>  {
   console.log('Refreshed Screen');
+  let logTime = moment().format() // 2020-03-05T09:23:03-05:00
+  console.log(logTime);
   fs.readFile(path.join(__dirname, '/datalog/data.txt'), (err, data) => {
     if (err) {
         console.error(err)

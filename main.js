@@ -1,54 +1,42 @@
-const sensor = require("node-dht-sensor").promises; // include the node-dht-sensor library
-const fs = require("fs");
-const path = require("path");
-const moment = require("moment");
-const cron = require('node-cron');
+const sensor = require("node-dht-sensor").promises; // include the node-dht-sensor package
+const fs = require("fs"); //include the File Sync package
+const path = require("path"); //include the path package
+const moment = require("moment"); //include the moment package
 
-const i2c = require('i2c-bus');
-const i2cBus = i2c.openSync(1);
-const screen = require('oled-i2c-bus');
-const font = require('oled-font-5x7');
-
-const https = require('https');
+const https = require('https'); // Include the https library to make requests
 // change the hostname, macAddress, and sessionKey to your own:
-let hostName = 'tigoe.io';
-let macAddress = 'dc:a6:32:1f:5b:5f';
-let sessionKey = 'F309E9DF-035E-49A8-BBB1-12794432421C';
-
-let readingInterval; // interval to do readings (initialized at bottom)
+let hostName = '';
+let macAddress = '';
+let sessionKey = '';
 
 let sensorReadings = {}; // object for device characteristics]
+let datalog; //the log of our data messages and content
 
-let datalog;
-
-console.log('Ran client task');
-readSensorDataDHT11();
-
+////////////////////////////////////
 
 // get sensor readings into the object called sensorReadings:
 async function readSensorDataDHT11() {
    try {
       //Read the temperature and humidity from the DHT11 sensor
       sensorReadings = await sensor.read(11, 4); //Specify DHT sensor model '11', GPIO port '4'
-
       //Send message to server if temperature and humidity are available
       if (!isNaN(sensorReadings.temperature) && !isNaN(sensorReadings.humidity)) {
-         //send message to server
          //log Sensor data
          logSensorData(sensorReadings);
+         //send message to server
          sendToServer(JSON.stringify(sensorReadings));
-         clearInterval(readingInterval);
+         //Update the values of the sensorReadings object
          return sensorReadings;
-
       };
    } catch (err) {
+      //console log the error
       console.error("Failed to read sensor data:", err);
    }
 }
 
 //Server response callback
 function getServerResponse(response) {
-   // when the final chunk comes in, print it out:
+   //when the communication ends return the last data in the response
    response.on('end', function (data) {
       return data;
    });
@@ -56,19 +44,15 @@ function getServerResponse(response) {
 
 // assemble the HTTPS request and send it:
 function sendToServer(data) {
-   // make the POST data a JSON object and stringify it:
-   var postData = JSON.stringify({
+   //make the POST data a JSON object and stringify it:
+   let postData = JSON.stringify({
       'macAddress': macAddress,
       'sessionKey': sessionKey,
       'data': data
    });
 
-   /*
-    set up the options for the request.
-    the full URL in this case is:
-    http://example.com:443/data
-   */
-   var options = {
+   ///set up the options for the request.
+   let options = {
       host: hostName,
       path: '/data',
       method: 'POST',
@@ -78,27 +62,34 @@ function sendToServer(data) {
          'Content-Length': postData.length
       }
    };
-
-   var request = https.request(options, getServerResponse); // start it
-   request.write(postData); // send the data
-   request.end(); // end it
-   console.log("Success! Message sent.")
+   // Start the request
+   let request = https.request(options, getServerResponse);
+   // Send the request to our server
+   request.write(postData);
+   // Close the request
+   request.end();
 }
 
 //Log sensor data into the datalog/data.txt file
 function logSensorData(data) {
-   let logTime = moment().format() // 2020-03-05T09:23:03-05:00
+   //get the current time with date
+   let logTime = moment().format() // Response in this format: 2020-03-05T09:23:03-05:00
+   //Grab the last six digits in the logTime
    logTime = logTime.toString().slice(0, -6);
+   //Replace the letter T for a _
    logTime = logTime.replace("T", "_");
 
+   //Grab the temperature from our sensorReadings object
    let temperature = ` temperature:${data.temperature}°C,`;
+   //Grab the humidity from our sensorReadings object
    let humidity = `humidity:${data.humidity}%`
 
+   //Add the formatted data into the data file
    datalog = logTime + temperature + humidity;
-   console.log(datalog);
    //Write every new log into the data.txt file with timestamp
    fs.appendFile(path.join(__dirname, '/datalog/data.txt'), `\n${datalog}`, (err) => {
       if (err) throw err;
-      console.log(`The datalog was updated at ${logTime}`);
    });
 }
+//Read, log, and send the sensor data.
+readSensorDataDHT11();

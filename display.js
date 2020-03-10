@@ -1,23 +1,23 @@
-const moment = require("moment");
-const path = require("path");
-const fs = require("fs");
+const path = require("path"); //include the path package
+const fs = require("fs"); //include the File Sync package
+const moment = require("moment"); //include the moment package
 
 const i2c = require('i2c-bus'); //include the i2c-bus package for the OLED screen
 const i2cBus = i2c.openSync(1); //
-const screen = require('oled-i2c-bus');
-const font = require('oled-font-5x7');
+const screen = require('oled-i2c-bus'); //include the OLED screen package
+const font = require('oled-font-5x7'); // include the font for the screen
 
-
+//Options for the OLED screen.
 let opts = {
     width: 128, // screen width and height
     height: 64,
     address: 0x3C // I2C address:check your particular model
 };
+//assign the screen to the oled variable
 let oled = new screen(i2cBus, opts);
 
-
+//Display the sensor data and timelog on screen
 async function displaySensorData() {
-
     //get the current time with date
     let logTime = moment().format() // Response in this format: 2020-03-05T09:23:03-05:00
     //look for the data file to log the data
